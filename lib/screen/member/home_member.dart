@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:kostlon/screen/auth.dart';
+import 'package:kostlon/screen/member/home/payment_member.dart';
+import 'package:kostlon/screen/member/home/profile_member.dart';
 import 'package:kostlon/screen/member/home/search_member.dart';
+import 'package:kostlon/screen/member/home/rent_member.dart';
 import 'package:kostlon/utils/color_theme.dart';
 
 class HomeMemberPage extends StatefulWidget {
@@ -18,18 +21,9 @@ class _HomeMemberPageState extends State<HomeMemberPage> {
 
   final List<Widget> _widgetOptions = <Widget>[
     SearchScreenMember(),
-    Text(
-      'Index 1: Kos Saya',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Pembayaran',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
+    RentMemberScreen(),
+    PaymentMemberScreen(),
+    ProfileMemberScreen()
   ];
 
   void _onItemTapped(int index) {

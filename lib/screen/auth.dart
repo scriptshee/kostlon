@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kostlon/screen/member/home_member.dart';
 import 'package:kostlon/utils/color_theme.dart';
@@ -15,11 +16,24 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
-  void submit(context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const HomeMemberPage()),
-    );
+  void submit(context) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _email.text.trim(),
+        password: _password.text.trim(),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeMemberPage()),
+      );
+      print(credential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
   }
 
   @override
@@ -42,10 +56,12 @@ class _LoginPageState extends State<LoginPage> {
             TextInput(
               val: _email,
               label: 'Email',
+              isPassword: false,
             ),
             SizedBox(height: 10),
             TextInput(
               val: _password,
+              isPassword: true,
               label: 'Password',
             ),
             Container(
@@ -78,14 +94,16 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class TextInput extends StatelessWidget {
-  const TextInput({
-    super.key,
-    required this.label,
-    required TextEditingController val,
-  }) : _val = val;
+  const TextInput(
+      {super.key,
+      required this.label,
+      required TextEditingController val,
+      required this.isPassword})
+      : _val = val;
 
   final String label;
   final TextEditingController _val;
+  final bool isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +113,7 @@ class TextInput extends StatelessWidget {
       ),
       child: TextField(
         controller: _val,
-        obscureText: false,
+        obscureText: isPassword,
         decoration: InputDecoration(
           labelText: "${label}",
           filled: true,

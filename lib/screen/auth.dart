@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kostlon/screen/member/home_member.dart';
@@ -13,6 +13,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final db = FirebaseFirestore.instance;
+  final User? user = FirebaseAuth.instance.currentUser;
+
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
@@ -22,13 +25,8 @@ class _LoginPageState extends State<LoginPage> {
         email: _email.text.trim(),
         password: _password.text.trim(),
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeMemberPage()),
-      );
-      print(credential);
+      checkRole(context);
     } on FirebaseAuthException catch (e) {
-      print(e.message);
       showDialog(
           context: context,
           builder: (context) {
@@ -57,8 +55,26 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void checkRole(BuildContext context) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    List strin = [];
+
+    await db.collection("users").doc(user?.uid).get().then((value) {
+      Map<String, dynamic> res = value.data() as dynamic;
+      if (res['role'] == 'member') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeMemberPage()),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (user != null) {
+      checkRole(context);
+    }
     return Scaffold(
       body: SafeArea(
         child: Column(

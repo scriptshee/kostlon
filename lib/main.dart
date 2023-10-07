@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kostlon/screen/main.dart';
+import 'package:kostlon/screen/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -8,6 +8,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MainPage(),
+      initialRoute: '/',
+      routes: {'/': (context) => LoginPage()},
     );
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140757588529",
+    "project_id": "kostlon",
+    "storage_bucket": "kostlon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140757588529:android:16456bc15d585c0758d310",
+        "android_client_info": {
+          "package_name": "com.example.kostlon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxN8h9PuR7FZsLArIWX2SSmPJ2gh1WqV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kostlon/screen/member/home_member.dart';
+import 'package:kostlon/screen/owner/home_owner.dart';
 import 'package:kostlon/utils/color_theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,37 +35,24 @@ class _LoginPageState extends State<LoginPage> {
               title: Text("Kredensial tidak ditemukan"),
             );
           });
-      // if (e.code == 'user-not-found') {
-      //   showDialog(
-      //       context: context,
-      //       builder: (context) {
-      //         return AlertDialog(
-      //           title: Text("User tidak ditemukan"),
-      //         );
-      //       });
-      // } else if (e.code == 'wrong-password') {
-      //   showDialog(
-      //       context: context,
-      //       builder: (context) {
-      //         return AlertDialog(
-      //           title: Text("Password salah"),
-      //         );
-      //       });
-      //   print('Wrong password provided for that user.');
-      // }
     }
   }
 
   void checkRole(BuildContext context) async {
     User? user = FirebaseAuth.instance.currentUser;
-    List strin = [];
-
     await db.collection("users").doc(user?.uid).get().then((value) {
       Map<String, dynamic> res = value.data() as dynamic;
       if (res['role'] == 'member') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomeMemberPage()),
+        );
+      }
+      // redirect halaman owner
+      if (res['role'] == 'owner') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeOwnerPage()),
         );
       }
     });

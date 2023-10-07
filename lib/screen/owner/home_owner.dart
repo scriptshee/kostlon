@@ -1,28 +1,29 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kostlon/screen/auth.dart';
-import 'package:kostlon/screen/member/home/payment_member.dart';
-import 'package:kostlon/screen/member/home/profile_member.dart';
-import 'package:kostlon/screen/member/home/search_member.dart';
-import 'package:kostlon/screen/member/home/rent_member.dart';
+import 'package:kostlon/screen/owner/home/home_owner.dart';
+import 'package:kostlon/screen/owner/home/payment_owner.dart';
+import 'package:kostlon/screen/owner/home/profile_owner.dart';
+import 'package:kostlon/screen/owner/home/rules_owner.dart';
 import 'package:kostlon/utils/color_theme.dart';
 
-class HomeMemberPage extends StatefulWidget {
-  const HomeMemberPage({super.key});
+class HomeOwnerPage extends StatefulWidget {
+  const HomeOwnerPage({super.key});
 
   @override
-  State<HomeMemberPage> createState() => _HomeMemberPageState();
+  State<HomeOwnerPage> createState() => _HomeOwnerPageState();
 }
 
-class _HomeMemberPageState extends State<HomeMemberPage> {
+class _HomeOwnerPageState extends State<HomeOwnerPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    SearchScreenMember(),
-    RentMemberScreen(),
-    PaymentMemberScreen(),
-    ProfileMemberScreen()
+    HomeOwnerScreen(),
+    PaymentOwnerScreen(),
+    RulesOwnerScreen(),
+    ProfileOwnerScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -35,9 +36,8 @@ class _HomeMemberPageState extends State<HomeMemberPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kostlon'),
+        title: Text("Kostln (Owner)"),
         centerTitle: true,
-        backgroundColor: AppColor.primary,
         elevation: 0,
         actions: [
           IconButton(
@@ -58,18 +58,16 @@ class _HomeMemberPageState extends State<HomeMemberPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-            ),
-            label: 'Cari',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Kos Saya',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.monetization_on),
             label: 'Pembayaran',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.gavel),
+            label: 'Peraturan',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
@@ -77,7 +75,7 @@ class _HomeMemberPageState extends State<HomeMemberPage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.indigo,
         unselectedItemColor: AppColor.light,
         onTap: _onItemTapped,
       ),

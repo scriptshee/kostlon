@@ -28,11 +28,32 @@ class _LoginPageState extends State<LoginPage> {
       );
       print(credential);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
+      print(e.message);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Kredensial tidak ditemukan"),
+            );
+          });
+      // if (e.code == 'user-not-found') {
+      //   showDialog(
+      //       context: context,
+      //       builder: (context) {
+      //         return AlertDialog(
+      //           title: Text("User tidak ditemukan"),
+      //         );
+      //       });
+      // } else if (e.code == 'wrong-password') {
+      //   showDialog(
+      //       context: context,
+      //       builder: (context) {
+      //         return AlertDialog(
+      //           title: Text("Password salah"),
+      //         );
+      //       });
+      //   print('Wrong password provided for that user.');
+      // }
     }
   }
 

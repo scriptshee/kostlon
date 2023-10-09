@@ -14,9 +14,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final db = FirebaseFirestore.instance;
-  final User? user = FirebaseAuth.instance.currentUser;
+  final db = FirebaseFirestore.instance; // inisial dati database firestore
+  final User? user = FirebaseAuth
+      .instance.currentUser; // untuk check apakah ada user atau tidak
 
+  // inisiai untuk text input
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
@@ -39,9 +41,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void checkRole(BuildContext context) async {
+    // data firebase auth
     User? user = FirebaseAuth.instance.currentUser;
+
+    // data fire store
     await db.collection("users").doc(user?.uid).get().then((value) {
       Map<String, dynamic> res = value.data() as dynamic;
+
+// check user data by response data collection
       if (res['role'] == 'member') {
         Navigator.pushReplacement(
           context,

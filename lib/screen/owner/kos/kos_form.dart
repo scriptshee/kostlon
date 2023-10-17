@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kostlon/services/kos_service.dart';
@@ -39,15 +40,14 @@ class _OwnerKostFormPageState extends State<OwnerKostFormPage> {
       "name": _namaController.text,
       "owner": owner?.displayName,
       "owner_id": owner?.uid,
-      "price": _hargaController.text,
+      "price": int.parse(_hargaController.text),
       "alamat": _alamatController.text,
       "publish": true,
       "jumlah": _jumlahKamar,
-      "created_at": "2023-10-17"
+      "created": Timestamp.now()
     };
     try {
       await kosServices.addData(body);
-
       // action setelah data berhasil di tambahkan
       reset();
       // navigasi ke halaman utama

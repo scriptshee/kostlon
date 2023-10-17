@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kostlon/screen/owner/kos/kos_form.dart';
 
 class HomeOwnerScreen extends StatefulWidget {
   const HomeOwnerScreen({super.key});
@@ -32,7 +33,18 @@ class _HomeOwnerScreenState extends State<HomeOwnerScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: [Text('Beranda')],
+      children: [
+        Text('Beranda'),
+        TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const OwnerKostFormPage()),
+              );
+            },
+            child: Text('TAMBAH KOS'))
+      ],
     );
   }
 }

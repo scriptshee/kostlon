@@ -8,7 +8,7 @@ class KosServices {
   final db = FirebaseFirestore.instance.collection('kos');
   final storage = FirebaseStorage.instance;
 
-  // READ: ambil data kos
+  // READ: ambil data kos [ Array ]
   Stream<QuerySnapshot> getData() {
     final dataStream = db.orderBy('created', descending: true).snapshots();
     return dataStream;
@@ -20,8 +20,9 @@ class KosServices {
     // simpan data
     return db.add(body);
   }
-  //  Object storage
-  // Future<void> saveimage() {
 
-  // }
+  // READ : detail { "label" : "value" }
+  Stream<DocumentSnapshot> getDetail(String? id) {
+    return db.doc(id).snapshots();
+  }
 }
